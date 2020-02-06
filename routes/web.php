@@ -11,6 +11,10 @@
 |
 */
 
+use App\Employees;
+
 Route::get('/', function () {
     return view('welcome');
+//    return Employees::find(10001)->title()->get();
 });
+
