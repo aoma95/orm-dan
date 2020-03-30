@@ -2,20 +2,21 @@
 
 namespace App\Http\Controllers;
 
-use App\Department;
+use App\Employee;
+use App\Salary;
 use Illuminate\Http\Request;
 
-class DepartmentApiController extends Controller
+class SalaryApiController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
-     * @return string
+     * @return \Illuminate\Http\Response
      */
     public function index()
     {
         //
-        return Department::all()->toJson();
+        return Salary::paginate(10);
     }
 
     /**
@@ -27,6 +28,13 @@ class DepartmentApiController extends Controller
     public function store(Request $request)
     {
         //
+        Employee::find($request->post('emp_no'))->salaries()->where('to_date','=','9999-01-01')->update(['to_date' => date_format(now(), 'Y-m-d')]);
+        $new = new Salary();
+        $new->emp_no = $request->post('emp_no');
+        $new->salary = $request->post('salary');
+        $new->from_date = date_format(now(), 'Y-m-d');
+        $new->to_date = '9999-01-01';
+        $new->save();
     }
 
     /**
@@ -38,7 +46,7 @@ class DepartmentApiController extends Controller
     public function show($id)
     {
         //
-        return Department::find($id)->toJson();
+        return Employee::find($id)->salaries()->where('to_date','=','9999-01-01')->get();
     }
 
     /**
@@ -62,8 +70,6 @@ class DepartmentApiController extends Controller
     public function destroy($id)
     {
         //
-        $dep=$id;
-        $id->delete();
-        return $dep->toJson();
+        return response('forbiden', 503);
     }
 }

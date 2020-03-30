@@ -4,16 +4,23 @@ namespace App\Http\Controllers;
 
 use App\Employee;
 use Illuminate\Http\Request;
+use App\Http\Requests\ApiEmployeesRequest;
 class EmployeeApiController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return Employee[]|\Illuminate\Database\Eloquent\Collection
      */
     public function index()
     {
-        //
+
+//        return Employee::chunk(900,function ($employees){
+//            return $employees;
+//        });
+        return Employee::paginate(10);
+//        return $employees->chunk(100)->toJson();
+//        return $employees;
     }
 
     /**
@@ -25,6 +32,10 @@ class EmployeeApiController extends Controller
     public function store(Request $request)
     {
         //
+        $data = $request->toArray();
+        Employee::create($data);
+        $employee = Employee::find($request->emp_no);
+        return $employee;
     }
 
     /**
@@ -36,6 +47,7 @@ class EmployeeApiController extends Controller
     public function show(Employee $employee)
     {
         //
+        return Employee::find($employee)->toJson();
     }
 
     /**
@@ -47,17 +59,21 @@ class EmployeeApiController extends Controller
      */
     public function update(Request $request, Employee $employee)
     {
-        //
+        $data = $request->toArray();
+        $employee->update($data);
+        return $employee;
     }
 
     /**
      * Remove the specified resource from storage.
      *
      * @param  \App\Employee  $employee
-     * @return \Illuminate\Http\Response
+     * @return string
      */
     public function destroy(Employee $employee)
     {
         //
+        $employee->delete();
+        return $employee;
     }
 }

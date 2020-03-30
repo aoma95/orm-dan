@@ -13,8 +13,10 @@ use Illuminate\Http\Request;
 |
 */
 
-Route::middleware('auth:api')->get('/user', function (Request $request) {
-    return $request->user();
-});
+//Route::middleware('auth:api')->get('/user', function (Request $request) {
+//    return $request->user();
+//});
 Route::apiResource('employees','EmployeeApiController');
 Route::apiResource('departments','DepartmentApiController');
+Route::apiResource('titles','TitleApiController');
+Route::apiResource('salary','SalaryApiController');
