@@ -59,6 +59,14 @@ class SalaryApiController extends Controller
     public function update(Request $request, $id)
     {
         //
+        $validateData = $request->validate([
+            'salary' => 'integer',
+        ]);
+        $salary = Employee::find($id)->salaries()->where('to_date','=','9999-01-01')->update($validateData);
+        // return $salary->toJson();
+        return $salary;
+        //return $request->post('salary');
+//        return response('forbiden', 503);
     }
 
     /**

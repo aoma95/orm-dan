@@ -8,6 +8,9 @@ class Salary extends Model
 {
     public $timestamps = false;
     protected $primaryKey = "emp_no";
+    protected $fillable = [
+        'salary',
+    ];
     public function employee() {
         return $this->belongsTo('App\Employee', 'emp_no');
     }

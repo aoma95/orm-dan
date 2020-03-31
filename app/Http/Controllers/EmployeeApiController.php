@@ -59,7 +59,9 @@ class EmployeeApiController extends Controller
      */
     public function update(Request $request, Employee $employee)
     {
-        $data = $request->toArray();
+        $data = $request->validate([
+            last_nam
+        ]);
         $employee->update($data);
         return $employee;
     }

@@ -27,6 +27,11 @@ class DepartmentApiController extends Controller
     public function store(Request $request)
     {
         //
+        $dep = new Department();
+        $dep->dept_no = $request->post('dept_no');
+        $dep->dept_name = $request->post('dept_name');
+        $dep->save();
+        return $dep;
     }
 
     /**
@@ -44,13 +49,18 @@ class DepartmentApiController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param \Illuminate\Http\Request $request
+     * @param Department $department
+     * @return string
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Department $department)
     {
-        //
+        $validateData = $request->validate([
+           'dept_no'=> 'string|max:4',
+            'dept_name'=>'string|max:255',
+        ]);
+        $department->update($validateData);
+        return $department->toJson();
     }
 
     /**
@@ -62,8 +72,8 @@ class DepartmentApiController extends Controller
     public function destroy($id)
     {
         //
-        $dep=$id;
-        $id->delete();
+        $dep= Department::find($id);
+        $dep->delete();
         return $dep->toJson();
     }
 }

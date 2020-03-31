@@ -8,7 +8,10 @@ class Department extends Model
 {
     public $timestamps = false;
     protected $primaryKey = "dept_no";
-
+    protected $fillable = [
+        'dept_no',
+        'dept_name'
+    ];
     public $incrementing = false;
     protected $keyType = "string";
 
