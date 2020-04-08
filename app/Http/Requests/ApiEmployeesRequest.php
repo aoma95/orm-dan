@@ -23,11 +23,11 @@ class ApiEmployeesRequest extends FormRequest
      */
     public function rules()
     {
-        $rules=[
-            'emp_no' => 'integer',
+        $rules = [
+            'emp_no' => 'bail|integer',
             'first_name' => 'string|max:255',
             'last_name' => 'string|max:255',
-            'birth_date' => 'date',
+            'birth_date' => 'date|required',
             'hire_date' => 'date|after:birth_date',
             'gender' => 'string|max:1',
         ];
@@ -38,5 +38,16 @@ class ApiEmployeesRequest extends FormRequest
             $rules["emp_no"]='integer|required|unique:employee';
         }
         return $rules;
+    }
+        public function messages()
+    {
+        return [
+            'emp_no.required' => 'Emp_no is required!',
+            'first_name.required' => 'First_name is required!',
+            'last_name.required' => 'Last_name is required!',
+            'birth_date.required' => 'Birth_date is required!',
+            'hire_date.required'=> 'Hire_date is required!',
+            'gender.required' => 'Gender is required!',
+        ];
     }
 }

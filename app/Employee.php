@@ -6,7 +6,16 @@ use Illuminate\Database\Eloquent\Model;
 
 class Employee extends Model
 {
+    public $timestamps = false;
     protected $primaryKey = "emp_no";
+    protected $fillable = [
+        'emp_no',
+        'birth_date',
+        'first_name',
+        'last_name',
+        'gender',
+        'hire_date'
+    ];
     public function departments() {
         return $this->belongsToMany('App\Department', 'dept_emp', 'emp_no', 'dept_no')->withPivot('from_date', 'to_date');
     }

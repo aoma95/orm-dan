@@ -78,6 +78,6 @@ class SalaryApiController extends Controller
     public function destroy($id)
     {
         //
-        return response('forbiden', 503);
+        return response('forbiden', 405);
     }
 }

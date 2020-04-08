@@ -29,13 +29,21 @@ class EmployeeApiController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(ApiEmployeesRequest $request)
     {
         //
-        $data = $request->toArray();
-        Employee::create($data);
-        $employee = Employee::find($request->emp_no);
-        return $employee;
+//        $validateData = $request->validate([
+//            'emp_no' => 'integer',
+//            'first_name' => 'string|max:255',
+//            'last_name' => 'string|max:255',
+//            'birth_date' => 'date',
+//            'hire_date' => 'date|after:birth_date',
+//            'gender' => 'string|max:1',
+//        ]);
+        $validated = $request->validated();
+//        return $validated;
+        $employee = Employee::create($validated);
+        return $employee->toJson();
     }
 
     /**
@@ -57,7 +65,7 @@ class EmployeeApiController extends Controller
      * @param  \App\Employee  $employee
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Employee $employee)
+    public function update(ApiEmployeesRequest $request, Employee $employee)
     {
         $data = $request->validate([
             last_nam
@@ -74,7 +82,6 @@ class EmployeeApiController extends Controller
      */
     public function destroy(Employee $employee)
     {
-        //
         $employee->delete();
         return $employee;
     }

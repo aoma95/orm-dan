@@ -29,8 +29,8 @@ class TitleApiController extends Controller
     {
         //
 //        return $request;
-        $title = Employee::find($request->post('emp_no'))->titles()->where('to_date','=','9999-01-01')->update(['to_date' => date_format(now(), 'Y-m-d')]);
-
+//        $title = Employee::find($request->post('emp_no'))->titles()->where('to_date','=','9999-01-01')->update(['to_date' => date_format(now(), 'Y-m-d')]);
+        $tilte = Employee::find($request->post('emp_no'))->titles()->where('to_date','>',now())->update()->update(['to_date' => date_format(now(), 'Y-m-d')]);
         $new = new Title();
         $new->emp_no = $request->post('emp_no');
         $new->title = $request->post('title');
@@ -62,7 +62,7 @@ class TitleApiController extends Controller
     public function update(Request $request, $id)
     {
         //
-        return response('forbiden', 503);
+        return response('forbiden', 405);
     }
 
     /**
@@ -74,6 +74,6 @@ class TitleApiController extends Controller
     public function destroy($id)
     {
         //
-        return response('forbiden', 503);
+        return response('forbiden', 405);
     }
 }
